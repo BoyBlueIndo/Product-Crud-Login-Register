@@ -28,10 +28,10 @@ class ProductController extends Controller
             ->when($genre, function ($q) use ($genre) {
                 $q->where('genres_id', $genre);
             })
-            ->when($minPrice, function ($q) use ($minPrice) {
+            ->when($minPrice !== null && $minPrice !== '', function ($q) use ($minPrice) {
                 $q->where('price', '>=', $minPrice);
             })
-            ->when($maxPrice, function ($q) use ($maxPrice) {
+            ->when($maxPrice !== null && $maxPrice !== '', function ($q) use ($maxPrice) {
                 $q->where('price', '<=', $maxPrice);
             })
             ->when($sort, function ($q) use ($sort) {
@@ -68,10 +68,10 @@ class ProductController extends Controller
             ->when($genre, function ($q) use ($genre) {
                 $q->where('genres_id', $genre);
             })
-            ->when($minPrice, function ($q) use ($minPrice) {
+            ->when($minPrice !== null && $minPrice !== '', function ($q) use ($minPrice) {
                 $q->where('price', '>=', $minPrice);
             })
-            ->when($maxPrice, function ($q) use ($maxPrice) {
+            ->when($maxPrice !== null && $maxPrice !== '', function ($q) use ($maxPrice) {
                 $q->where('price', '<=', $maxPrice);
             })
             ->when($sort, function ($q) use ($sort) {
@@ -84,7 +84,7 @@ class ProductController extends Controller
                 };
             })
             ->paginate(12)
-            ->withQueryString(); // 🔥 penting biar filter tidak hilang
+            ->withQueryString();
 
         $genres = Genre::all();
 

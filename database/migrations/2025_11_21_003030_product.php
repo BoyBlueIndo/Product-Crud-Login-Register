@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('genres_id')->constrained('genres')->onDelete('cascade');
             $table->longText('description');
-            $table->string('price')->default('0');
+            $table->integer('price')->default('0');
             $table->integer('stock')->default('1');
             $table->string('image')->nullable();
             $table->timestamps();
