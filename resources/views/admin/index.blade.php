@@ -22,17 +22,76 @@
     </div>
 
     {{-- Search --}}
-    <form class="card shadow-sm mb-4 p-3" method="GET">
-        <div class="row g-2">
-            <div class="col-md-10">
-                <input type="text"
-                       name="search"
-                       class="form-control"
-                       placeholder="Search product..."
-                       value="{{ $search ?? '' }}">
-            </div>
-            <div class="col-md-2 d-grid">
-                <button class="btn btn-dark">Search</button>
+    <form method="GET" class="card shadow-sm mb-4">
+        <div class="card-body">
+            <div class="row g-3">
+
+                {{-- Search --}}
+                <div class="col-md-3">
+                    <input type="text" 
+                        name="search"
+                        class="form-control"
+                        placeholder="Search product..."
+                        value="{{ $search }}">
+                </div>
+
+                {{-- Genre --}}
+                <div class="col-md-2">
+                    <select name="genre" class="form-select">
+                        <option value="">All Genres</option>
+                        @foreach ($genres as $g)
+                            <option value="{{ $g->id }}"
+                                {{ $genre == $g->id ? 'selected' : '' }}>
+                                {{ $g->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                {{-- Min Price --}}
+                <div class="col-md-2">
+                    <input type="number"
+                        name="min_price"
+                        class="form-control"
+                        placeholder="Min Price"
+                        value="{{ $minPrice }}">
+                </div>
+
+                {{-- Max Price --}}
+                <div class="col-md-2">
+                    <input type="number"
+                        name="max_price"
+                        class="form-control"
+                        placeholder="Max Price"
+                        value="{{ $maxPrice }}">
+                </div>
+
+                {{-- Sort --}}
+                <div class="col-md-2">
+                    <select name="sort" class="form-select">
+                        <option value="">Sort By</option>
+                        <option value="price_asc" {{ $sort == 'price_asc' ? 'selected' : '' }}>
+                            Price ↑
+                        </option>
+                        <option value="price_desc" {{ $sort == 'price_desc' ? 'selected' : '' }}>
+                            Price ↓
+                        </option>
+                        <option value="newest" {{ $sort == 'newest' ? 'selected' : '' }}>
+                            Newest
+                        </option>
+                        <option value="oldest" {{ $sort == 'oldest' ? 'selected' : '' }}>
+                            Oldest
+                        </option>
+                    </select>
+                </div>
+
+                {{-- Button --}}
+                <div class="col-md-1 d-grid">
+                    <button class="btn btn-dark">
+                        Filter
+                    </button>
+                </div>
+
             </div>
         </div>
     </form>

@@ -142,13 +142,28 @@
                                 Stock: {{ $product->stock }}
                             </small>
 
-                            <a 
-                                href="{{ route('user.cart.add', $product->id) }}"
-                                class="btn btn-primary w-100
-                                    {{ $product->stock <= 0 ? 'disabled' : '' }}"
-                            >
-                                Add to Cart
-                            </a>
+                            <form action="{{ route('user.cart.add') }}" method="POST" class="mt-auto">
+                                @csrf
+
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+                                <div class="input-group mb-2">
+                                    <span class="input-group-text">Quantity</span>
+                                    <input 
+                                        type="number"
+                                        name="quantity"
+                                        class="form-control"
+                                        value="1"
+                                        min="1"
+                                        max="{{ $product->stock }}"
+                                        {{ $product->stock <= 0 ? 'disabled' : '' }}
+                                    >
+                                </div>
+
+                                <button lass="btn btn-primary w-100" {{ $product->stock <= 0 ? 'disabled' : '' }}>
+                                    Add to Cart
+                                </button>
+                            </form>
                         </div>
 
                     </div>

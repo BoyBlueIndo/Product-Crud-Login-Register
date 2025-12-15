@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
@@ -14,32 +15,34 @@ class CartController extends Controller
         return view('user.cart.index', compact('cart'));
     }
 
-    public function add($productId)
+    public function add(Request $request)
     {
-        $product = Product::findOrFail($productId);
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'quantity'   => 'required|integer|min:1',
+        ]);
 
-        // jumlah di cart user saat ini
-        $cartItem = Cart::where('user_id', Auth::id())
-            ->where('product_id', $productId)
-            ->first();
+        $product = Product::findOrFail($request->product_id);
+        $qty     = $request->quantity;
 
-        $currentQty = $cartItem ? $cartItem->quantity : 0;
-
-        if ($currentQty + 1 > $product->stock) {
-            return back()->with('error', 'Stock not enough.');
+        if ($qty > $product->stock) {
+            return back()->with('error', 'Quantity exceeds available stock.');
         }
 
-        Cart::updateOrCreate(
+        $cart = Cart::firstOrCreate(
             [
-                'user_id' => Auth::id(),
-                'product_id' => $productId,
+                'user_id'    => auth()->id(),
+                'product_id' => $product->id,
             ],
             [
-                'quantity' => $currentQty + 1
+                'quantity' => 0,
             ]
         );
 
-        return back()->with('success', 'The product added to cart.');
+        $cart->quantity += $qty;
+        $cart->save();
+
+        return back()->with('success', 'Product added to cart.');
     }
 
     public function remove($id)

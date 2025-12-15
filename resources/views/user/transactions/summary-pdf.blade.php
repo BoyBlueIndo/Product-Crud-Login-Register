@@ -49,7 +49,7 @@
         <thead>
             <tr>
                 <th>Product</th>
-                <th width="80">Qty</th>
+                <th width="80">Quantity</th>
                 <th width="120">Price</th>
                 <th width="120">Subtotal</th>
             </tr>
