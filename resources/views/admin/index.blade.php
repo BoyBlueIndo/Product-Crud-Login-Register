@@ -71,10 +71,10 @@
                     <select name="sort" class="form-select">
                         <option value="">Sort By</option>
                         <option value="price_asc" {{ $sort == 'price_asc' ? 'selected' : '' }}>
-                            Price ↑
+                            Price ↑ (Lowest To Highest)
                         </option>
                         <option value="price_desc" {{ $sort == 'price_desc' ? 'selected' : '' }}>
-                            Price ↓
+                            Price ↓ (Highest To Lowest)
                         </option>
                         <option value="newest" {{ $sort == 'newest' ? 'selected' : '' }}>
                             Newest

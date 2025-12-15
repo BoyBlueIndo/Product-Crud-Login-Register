@@ -69,10 +69,10 @@
                     <select name="sort" class="form-select">
                         <option value="">Sort By</option>
                         <option value="price_asc" {{ $sort == 'price_asc' ? 'selected' : '' }}>
-                            Price ↑
+                            Price ↑ (Lowest To Highest)
                         </option>
                         <option value="price_desc" {{ $sort == 'price_desc' ? 'selected' : '' }}>
-                            Price ↓
+                            Price ↓ (Highest To Lowest)
                         </option>
                         <option value="newest" {{ $sort == 'newest' ? 'selected' : '' }}>
                             Newest
@@ -160,7 +160,7 @@
                                     >
                                 </div>
 
-                                <button lass="btn btn-primary w-100" {{ $product->stock <= 0 ? 'disabled' : '' }}>
+                                <button class="btn btn-primary w-100" {{ $product->stock <= 0 ? 'disabled' : '' }}>
                                     Add to Cart
                                 </button>
                             </form>
