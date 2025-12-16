@@ -44,7 +44,7 @@ class ProductController extends Controller
                 };
             })
             ->paginate(12)
-            ->withQueryString(); // 🔥 penting biar filter tidak hilang
+            ->withQueryString();
 
         $genres = Genre::all();
 
