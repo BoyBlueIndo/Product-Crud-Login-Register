@@ -44,8 +44,6 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(f
     Route::post('checkout', [TransactionController::class, 'checkout'])->name('checkout');
     Route::get('transactions', [TransactionController::class, 'index'])->name('transactions.index');
 
-    Route::get('inventory', [UserController::class, 'inventory'])->name('inventory');
-
     Route::get('/transactions/summary/pdf',
     [TransactionController::class, 'printAllTransactionsPdf']
     )->name('transactions.summary-pdf');

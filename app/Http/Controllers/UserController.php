@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Inventory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -83,11 +82,5 @@ class UserController extends Controller
         request()->session()->regenerateToken();
 
         return redirect()->route('login');
-    }
-
-    public function inventory()
-    {
-        $items = Inventory::where('user_id', Auth::id())->with('product')->get();
-        return view('user.inventory.index', compact('items'));
     }
 }
