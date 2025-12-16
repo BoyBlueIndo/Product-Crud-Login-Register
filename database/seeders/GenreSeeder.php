@@ -10,15 +10,9 @@ class GenreSeeder extends Seeder
     public function run(): void
     {
         $genres = [
-            'Action',
-            'Adventure',
-            'RPG',
-            'Simulation',
-            'Strategy',
-            'Horror',
-            'Puzzle',
-            'Racing',
-            'Sports',
+            'Minuman (Hangat)',
+            'Minuman (Dingin)',
+            'Snacks',
         ];
 
         foreach ($genres as $genre) {

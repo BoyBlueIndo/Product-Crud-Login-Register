@@ -1,15 +1,15 @@
 @extends('layout.app')
 
-@section('title', 'Manage Genres')
+@section('title', 'Manage Categories')
 
 @section('content')
 <div class="container mt-4">
 
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold">Manage Genres</h2>
+        <h2 class="fw-bold">Manage Categories</h2>
         <div class="d-flex gap-2">
             <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createModal">
-                + Add Genre
+                + Add Categories
             </button>
             <a href="{{ route('admin.index') }}" class="btn btn-outline-dark btn-sm">
                 ← Back
@@ -40,7 +40,7 @@
                             </button>
                             <form action="{{ route('admin.genres.destroy', $genre->id) }}"
                                   method="POST"
-                                  onsubmit="return confirm('Delete this genre?')">
+                                  onsubmit="return confirm('Delete this category?')">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger btn-sm">
@@ -55,7 +55,7 @@
                         <div class="modal-content">
 
                             <div class="modal-header">
-                                <h5 class="modal-title">Edit Genre</h5>
+                                <h5 class="modal-title">Edit</h5>
                                 <button class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
 
@@ -64,7 +64,7 @@
                                 @method('PUT')
 
                                 <div class="modal-body">
-                                    <label class="form-label">Genre Name</label>
+                                    <label class="form-label">Category Name</label>
                                     <input 
                                         type="text"
                                         name="name"
@@ -94,7 +94,7 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title">Add New Genre</h5>
+                <h5 class="modal-title">Add New Category</h5>
                 <button class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -102,7 +102,7 @@
                 @csrf
 
                 <div class="modal-body">
-                    <label class="form-label">Genre Name</label>
+                    <label class="form-label">Category Name</label>
                     <input 
                         type="text"
                         name="name"
@@ -114,7 +114,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button class="btn btn-primary">Create Genre</button>
+                    <button class="btn btn-primary">Create Category</button>
                 </div>
             </form>
 

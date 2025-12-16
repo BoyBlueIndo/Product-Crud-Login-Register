@@ -30,6 +30,10 @@
             padding: 10px;
             border: 2px solid #000;
         }
+        .trx-info {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
@@ -43,19 +47,34 @@
 </p>
 
 @foreach ($transactions as $trx)
+
     <h3>Transaction #{{ $trx->id }}</h3>
+
+    {{-- TRANSACTION INFO --}}
+    <div class="trx-info">
+        <strong>Date:</strong> {{ $trx->created_at->format('d M Y H:i') }}<br>
+        <strong>Payment Method:</strong> {{ strtoupper($trx->payment_method) }}
+    </div>
 
     <table>
         <thead>
             <tr>
                 <th>Product</th>
-                <th width="80">Quantity</th>
-                <th width="120">Price</th>
+                <th width="70">Qty</th>
+                <th width="110">Price</th>
                 <th width="120">Subtotal</th>
             </tr>
         </thead>
         <tbody>
+            @php
+                $trxTotal = 0;
+            @endphp
+
             @foreach ($trx->items as $item)
+                @php
+                    $subtotal = $item->product->price * $item->quantity;
+                    $trxTotal += $subtotal;
+                @endphp
                 <tr>
                     <td>{{ $item->product->name }}</td>
                     <td class="right">{{ $item->quantity }}</td>
@@ -63,12 +82,31 @@
                         Rp {{ number_format($item->product->price, 0, ',', '.') }}
                     </td>
                     <td class="right">
-                        Rp {{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}
+                        Rp {{ number_format($subtotal, 0, ',', '.') }}
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+
+    {{-- CASH DETAIL --}}
+    @if ($trx->payment_method === 'cash')
+        <table style="margin-top:8px">
+            <tr>
+                <td><strong>Cash Paid</strong></td>
+                <td class="right">
+                    Rp {{ number_format($trx->cash_paid, 0, ',', '.') }}
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Change</strong></td>
+                <td class="right">
+                    Rp {{ number_format($trx->change_amount, 0, ',', '.') }}
+                </td>
+            </tr>
+        </table>
+    @endif
+
 @endforeach
 
 <div class="total-box">

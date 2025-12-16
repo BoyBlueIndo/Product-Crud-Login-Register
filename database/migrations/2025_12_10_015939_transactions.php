@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('payment_method')->nullable();
+            $table->integer('cash_paid')->nullable();
+            $table->integer('change_amount')->nullable();
             $table->timestamps();
         });
     }

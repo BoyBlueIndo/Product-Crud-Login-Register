@@ -29,8 +29,14 @@
     @forelse ($transactions as $trx)
         <div class="card mb-4 shadow-sm">
 
-            <div class="card-header fw-semibold">
-                Transaction #{{ $trx->id }}
+            <div class="card-header fw-semibold d-flex justify-content-between align-items-center">
+                <span>
+                    Transaction #{{ $trx->id }}
+                </span>
+
+                <span class="badge bg-info text-dark text-uppercase">
+                    {{ str_replace('_', ' ', $trx->payment_method) }}
+                </span>
             </div>
 
             <div class="card-body p-0">
@@ -52,8 +58,29 @@
                 </table>
             </div>
 
-            <div class="card-footer text-muted text-end">
-                {{ $trx->created_at->format('d M Y, H:i') }}
+            <div class="card-footer text-muted">
+                <div class="d-flex justify-content-between">
+                    <small>
+                        Payment: {{ ucwords($trx->payment_method) }}
+                    </small>
+                    <small>
+                        {{ $trx->created_at->format('d M Y, H:i') }}
+                    </small>
+                </div>
+
+                @if ($trx->payment_method === 'cash')
+                    <div class="mt-1">
+                        <small>
+                            Cash Paid:
+                            <strong>Rp {{ number_format($trx->cash_paid,0,',','.') }}</strong>
+                            |
+                            Change:
+                            <strong class="text-success">
+                                Rp {{ number_format($trx->change_amount,0,',','.') }}
+                            </strong>
+                        </small>
+                    </div>
+                @endif
             </div>
         </div>
     @empty

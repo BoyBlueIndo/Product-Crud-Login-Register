@@ -9,6 +9,8 @@ class Transaction extends Model
     protected $fillable = [
         'user_id', 
         'payment_method',
+        'cash_paid',
+        'change_amount',
     ];
 
     public function items() {

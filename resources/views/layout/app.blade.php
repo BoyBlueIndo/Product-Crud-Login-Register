@@ -14,7 +14,7 @@
     {{-- NAVBAR SIMPLE (Opsional) --}}
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="#">Le Store' le</a>
+            <a class="navbar-brand" href="#">Co-Drink</a>
 
             <div>
                 <a href="{{ route('logout') }}" class="btn btn-outline-danger btn-sm">Logout</a>
@@ -29,6 +29,6 @@
 
     {{-- Bootstrap JS --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+    @stack('scripts')
 </body>
 </html>

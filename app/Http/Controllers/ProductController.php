@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Genre;
+use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -48,8 +49,12 @@ class ProductController extends Controller
 
         $genres = Genre::all();
 
+        $cart = Cart::with('product')
+        ->where('user_id', Auth::id())
+        ->get();
+
         return view('user.index', compact(
-            'products', 'genres', 'search', 'genre', 'sort', 'minPrice', 'maxPrice'
+            'products', 'cart', 'genres', 'search', 'genre', 'sort', 'minPrice', 'maxPrice'
         ));
     }
 

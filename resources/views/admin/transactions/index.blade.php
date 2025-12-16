@@ -46,10 +46,14 @@
                 </table>
             </div>
 
-            <div class="card-footer text-muted text-end">
-                {{ $trx->created_at->format('d M Y, H:i') }}
+        <div class="card-footer d-flex justify-content-between text-muted">
+                <small>
+                    Payment: {{ ucwords(str_replace('_', ' ', $trx->payment_method)) }}
+                </small>
+                <small>
+                    {{ $trx->created_at->format('d M Y, H:i') }}
+                </small>
             </div>
-
         </div>
     @empty
         <div class="alert alert-info">No transactions found.</div>

@@ -13,7 +13,7 @@
                 + Add Product
             </a>
             <a href="{{ route('admin.genres.index') }}" class="btn btn-outline-secondary btn-sm">
-                Manage Genres
+                Manage Categories
             </a>
             <a href="{{ route('admin.transactions.index') }}" class="btn btn-outline-dark btn-sm">
                 Transactions
@@ -38,7 +38,7 @@
                 {{-- Genre --}}
                 <div class="col-md-2">
                     <select name="genre" class="form-select">
-                        <option value="">All Genres</option>
+                        <option value="">All Categories</option>
                         @foreach ($genres as $g)
                             <option value="{{ $g->id }}"
                                 {{ $genre == $g->id ? 'selected' : '' }}>
@@ -104,7 +104,7 @@
                     <tr>
                         <th width="90">Image</th>
                         <th>Name</th>
-                        <th>Genre</th>
+                        <th>Category</th>
                         <th>Description</th>
                         <th width="120">Price</th>
                         <th width="90">Stock</th>

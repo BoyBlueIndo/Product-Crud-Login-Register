@@ -17,9 +17,9 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Genre</label>
+                <label class="form-label">Category</label>
                 <select name="genres_id" class="form-control" required>
-                    <option value="">-- Pilih Genre --</option>
+                    <option value="">-- Choose Category --</option>
                     @foreach ($genres as $genre)
                         <option value="{{ $genre->id }}">{{ $genre->name }}</option>
                     @endforeach

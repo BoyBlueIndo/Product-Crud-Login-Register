@@ -31,7 +31,8 @@ class TransactionController extends Controller
     public function checkout(Request $request)
     {
         $request->validate([
-            'payment_method' => 'required|string'
+            'payment_method' => 'required|string',
+            'cash_paid' => 'nullable|integer|min:0'
         ]);
 
         $cartItems = Cart::where('user_id', Auth::id())
@@ -46,7 +47,7 @@ class TransactionController extends Controller
 
         try {
 
-            // 1. Cek stock dulu
+            // 1️⃣ Cek stok
             foreach ($cartItems as $item) {
                 if ($item->product->stock < $item->quantity) {
                     throw new \Exception(
@@ -55,32 +56,51 @@ class TransactionController extends Controller
                 }
             }
 
-            // 2. Buat transaksi
+            // 2️⃣ Hitung total harga
+            $totalPrice = 0;
+            foreach ($cartItems as $item) {
+                $totalPrice += $item->product->price * $item->quantity;
+            }
+
+            // 3️⃣ Validasi CASH
+            $cashPaid = null;
+            $change   = null;
+
+            if ($request->payment_method === 'cash') {
+                if (!$request->cash_paid || $request->cash_paid < $totalPrice) {
+                    throw new \Exception('Cash is not enough.');
+                }
+
+                $cashPaid = $request->cash_paid;
+                $change   = $cashPaid - $totalPrice;
+            }
+
+            // 4️⃣ Simpan TRANSACTION (SATU KALI)
             $transaction = Transaction::create([
                 'user_id' => Auth::id(),
                 'payment_method' => $request->payment_method,
+                'cash_paid' => $cashPaid,
+                'change_amount' => $change,
             ]);
 
-            // 3. Simpan item + kurangi stock
+            // 5️⃣ Simpan ITEMS + kurangi stok
             foreach ($cartItems as $item) {
-
                 Transaction_item::create([
                     'transaction_id' => $transaction->id,
                     'product_id' => $item->product_id,
                     'quantity' => $item->quantity,
                 ]);
 
-                // 🔥 KURANGI STOCK
                 $item->product->decrement('stock', $item->quantity);
             }
 
-            // 4. Hapus cart
+            // 6️⃣ Hapus cart
             Cart::where('user_id', Auth::id())->delete();
 
             DB::commit();
 
             return redirect()->route('user.transactions.index')
-                ->with('success', 'Checkout Succeeded!');
+                ->with('success', 'Checkout succeeded!');
 
         } catch (\Exception $e) {
             DB::rollBack();
