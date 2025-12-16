@@ -13,10 +13,10 @@
             <a href="{{ route('user.index') }}" class="btn btn-outline-secondary btn-sm">
                 Back to Store
             </a>
-            <a href="{{ route('user.transactions.summary-pdf') }}" 
+            {{-- <a href="{{ route('user.transactions.summary-pdf') }}" 
                class="btn btn-primary btn-sm">
                 Download Summary
-            </a>
+            </a> --}}
         </div>
     </div>
 
